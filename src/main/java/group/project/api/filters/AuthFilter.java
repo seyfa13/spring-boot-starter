@@ -36,12 +36,6 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException, IOException {
-
-        if(httpServletRequest.getRequestURI().equals("/user/all")) {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-            return;
-        }
-
         String authorization = httpServletRequest.getHeader("Authorization");
 
         String authToken = null;
@@ -51,19 +45,15 @@ public class AuthFilter extends OncePerRequestFilter {
         if (authorization != null && authorization.startsWith("Bearer ")) {
             authToken = authorization.split(" ")[1];
             email = jwtManager.extractUsername(authToken);
-
             // extract authToken from authorization
             // extract phone from authToken
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
                 // find user details
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
                 // Validate token
                 // Validate authentification so SS
                 // will open end-points
                 if (jwtManager.validateToken(authToken, userDetails)) {
-
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                             = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());

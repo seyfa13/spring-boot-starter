@@ -1,6 +1,8 @@
 package group.project.api.controllers;
 
 import group.project.api.entities.AuthRequest;
+import group.project.api.entities.User;
+import group.project.api.managers.UserManager;
 import group.project.api.services.jwt.JwtManager;
 import group.project.api.utils.response.BindingResultWrapper;
 import group.project.api.utils.response.ResponseObject;
@@ -27,8 +29,8 @@ public class AuthenticationController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-//    @Autowired
-//    UserManager userManager;
+    @Autowired
+    UserManager userManager;
 
     @PostMapping("/in")
     public ResponseEntity<Map<String, Object>> authenticate(@Valid @RequestBody AuthRequest authRequest, BindingResult bindingResult) {
@@ -39,17 +41,17 @@ public class AuthenticationController {
         // validate user Using AuthenticationManger
         // it uses CustomUserDetailsServvice whic load
         // a user according to username and check password
-        UsernamePasswordAuthenticationToken username = new UsernamePasswordAuthenticationToken(authRequest.getPhone(), authRequest.getPassword());
+        UsernamePasswordAuthenticationToken username = new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword());
         authenticationManager.authenticate(username);
 
         // once authentified, create token
-        final String token = jwtManager.generateToken(authRequest.getPhone());
+        final String token = jwtManager.generateToken(authRequest.getEmail());
 
         // and fetch bd User
-//        User user = userManager.find(authRequest.getPhone());
-//
-//        result.put("authToken", token);
-//        result.put("user", user);
+        User user = userManager.find(authRequest.getEmail());
+
+        result.put("authToken", token);
+        result.put("user", user);
 
         return ResponseEntity.ok(result);
     }

@@ -8,9 +8,9 @@ public class BindingResultWrapper {
 
     public static void checkFormErrors(BindingResult bindingResult)  {
 
-        System.err.println("binding result");
         if(bindingResult.hasErrors()) {
 
+            System.out.println("binding result has erros");
             bindingResult.getAllErrors().forEach(e -> {
                 System.err.println(e.getCode() + "(" + e.getDefaultMessage() + ") : " + e.getDefaultMessage());
             });

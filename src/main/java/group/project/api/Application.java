@@ -1,6 +1,9 @@
 package group.project.api;
 
+import group.project.api.utils.lifecycle.BootstrapActions;
+import group.project.api.utils.lifecycle.EndActions;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,17 +21,23 @@ public class Application {
 	@Value("${app.name}")
 	private String appName;
 
-	@Value("${app.name}")
+	@Value("${app.profile}")
 	private String profile;
+
+	@Autowired
+	BootstrapActions bootstrapActions;
+
+	@Autowired
+	EndActions endActions;
 
 	@PostConstruct
 	public void post() {
-		logger.info("Application" + appName + " Started with profile '" + profile + "'");
+		bootstrapActions.executeActions();
 	}
 
 	@PreDestroy
 	public void pre() {
-
+		endActions.executeActions();
 	}
 
 	public static void main(String[] args) {

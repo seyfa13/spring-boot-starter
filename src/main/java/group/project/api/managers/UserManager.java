@@ -24,6 +24,10 @@ public class UserManager implements IManager<Integer, User> {
         return userRepository.findById(id).orElseThrow(() -> new ManagerException(ExceptionConstants.userNotFound()));
     }
 
+    public User find(String email) throws ManagerException {
+        return userRepository.findByEmail(email).orElseThrow(() -> new ManagerException(ExceptionConstants.userNotFound()));
+    }
+
     @Override
     public void create(User user) throws ManagerException {
         // TODO : add business rules

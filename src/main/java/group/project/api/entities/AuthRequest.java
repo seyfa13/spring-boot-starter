@@ -1,13 +1,15 @@
 package group.project.api.entities;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class AuthRequest {
 
     @NotBlank()
+    @Email
     @Size(min=8, max= 20)
-    private String phone;
+    private String email;
 
     @NotBlank()
     @Size(min = 6, max = 50)
@@ -17,12 +19,17 @@ public class AuthRequest {
 
     }
 
-    public String getPhone() {
-        return phone;
+    public AuthRequest(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -36,8 +43,9 @@ public class AuthRequest {
     @Override
     public String toString() {
         return "AuthRequest{" +
-                "phone='" + phone + '\'' +
+                "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }
