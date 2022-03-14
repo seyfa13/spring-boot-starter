@@ -1,6 +1,7 @@
 package group.project.api.security;
 
 
+import group.project.api.filters.AuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,24 +22,30 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    AuthFilter authFilter;
+
+    @Autowired
+    CustomUserDetailsService customUserDetailsService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(customUserDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .cors().and()
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/user/create", "/auth/in", "/localisation/cities", "/category/list", "/annonce/find/**")
-//                .permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .exceptionHandling().and().sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.addFilterBefore(this.authFilter, UsernamePasswordAuthenticationFilter.class);;
+        http
+            .cors().and()
+            .csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/**")
+            .permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .exceptionHandling().and().sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(this.authFilter, UsernamePasswordAuthenticationFilter.class);;
     }
 
     @Bean
