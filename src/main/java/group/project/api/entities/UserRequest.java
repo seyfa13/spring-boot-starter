@@ -1,4 +1,4 @@
-package group.project.api.filters;
+package group.project.api.entities;
 
 
 import org.springframework.stereotype.Component;

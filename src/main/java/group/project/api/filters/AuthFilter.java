@@ -1,5 +1,6 @@
 package group.project.api.filters;
 
+import group.project.api.entities.UserRequest;
 import group.project.api.repositories.UserRepository;
 import group.project.api.security.CustomUserDetailsService;
 import group.project.api.services.jwt.JwtManager;
