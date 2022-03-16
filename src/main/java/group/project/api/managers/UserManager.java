@@ -31,6 +31,11 @@ public class UserManager implements IManager<Integer, User> {
     @Override
     public void create(User user) throws ManagerException {
         // TODO : add business rules
+
+        if(user.getPassword().equals(user.getRepeatPassword())) {
+            throw new ManagerException(ExceptionConstants.passwordNotMatchs());
+        }
+
         User userToCreate = new User();
         userToCreate.setEmail(user.getEmail());
         userToCreate.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -41,8 +46,10 @@ public class UserManager implements IManager<Integer, User> {
 
     @Override
     public void update(User object) throws ManagerException {
-        // TODO : add business rules
+        User user = userRepository.findById(object.getId()).orElseThrow(() -> new ManagerException(ExceptionConstants.userNotFound()));
 
+        // TODO : add business rules
+        userRepository.save(user);
     }
 
     @Override
@@ -51,4 +58,5 @@ public class UserManager implements IManager<Integer, User> {
         User user = userRepository.findById(id).orElseThrow(() -> new ManagerException(ExceptionConstants.userNotFound()));
         userRepository.delete(user);
     }
+
 }

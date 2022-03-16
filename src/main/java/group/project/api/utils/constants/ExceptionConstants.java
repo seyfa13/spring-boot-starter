@@ -9,4 +9,9 @@ public class ExceptionConstants {
     public static String formErrors() {
         return "Erreur de formulaire, veuillez vérifier vos données";
     }
+
+    public static String passwordNotMatchs() {
+        return "Les deux mots de passe ne correspondent pas.";
+    }
+
 }

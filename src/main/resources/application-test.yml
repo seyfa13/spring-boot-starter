@@ -11,4 +11,4 @@ server:
   port: 8000
 app:
   name: Application
-  profile: Default
+  profile: Test Server

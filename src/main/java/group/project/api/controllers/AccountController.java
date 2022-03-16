@@ -21,7 +21,7 @@ public class AccountController {
     @Autowired
     UserManager userManager;
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> createAccuont(@Valid @RequestBody User user, BindingResult bindingResult) {
         Map result = ResponseObject.map();
         BindingResultWrapper.checkFormErrors(bindingResult);

@@ -13,7 +13,6 @@ import java.util.Map;
 @RequestMapping("admin/users")
 public class UserAdminController {
 
-    // TODO: A enlever ci nimou gueun gawé
     @GetMapping("")
     public ResponseEntity<Map<String, Object>> findAll() {
         Map result = ResponseObject.map();
