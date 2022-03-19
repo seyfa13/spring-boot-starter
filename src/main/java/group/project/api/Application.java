@@ -2,7 +2,8 @@ package group.project.api;
 
 import group.project.api.utils.lifecycle.BootstrapActions;
 import group.project.api.utils.lifecycle.EndActions;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +17,7 @@ import javax.annotation.PreDestroy;
 @SpringBootApplication
 public class Application {
 
-	private static Logger logger = Logger.getLogger(Application.class);
+	Logger logger = LoggerFactory.getLogger(Application.class);
 
 	@Value("${app.name}")
 	private String appName;
@@ -32,6 +33,7 @@ public class Application {
 
 	@PostConstruct
 	public void post() {
+		logger.info("'{}' api, '{}' environment", appName, profile);
 		bootstrapActions.executeActions();
 	}
 

@@ -1,8 +1,9 @@
 package group.project.api.exceptions.handler;
 
-import org.apache.log4j.Logger;
 import group.project.api.exceptions.FormException;
 import group.project.api.exceptions.ManagerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,7 +19,7 @@ import java.util.Map;
 @ControllerAdvice
 public class ExceptionManager extends ResponseEntityExceptionHandler {
 
-    private static Logger logger = Logger.getLogger(ExceptionManager.class);
+    private static Logger logger = LoggerFactory.getLogger(ExceptionManager.class);
 
     /**
      * Handle logic exceptions
@@ -78,7 +79,7 @@ public class ExceptionManager extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleOthersException(HttpServletRequest request, Exception exception) {
 
-        logger.fatal("Imprevisible exception error catched");
+        logger.error("Imprevisible exception error catched");
         this.showError(request, exception);
 
         Map<String, Object> result = new HashMap<>();
