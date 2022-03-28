@@ -8,8 +8,8 @@ pipeline {
 
         stage("Build") {
             steps {
-                echo 'Build'
-                echo 'ork $WORKSPACE'
+                sh "mvn -version"
+                sh "mvn clean install"
             }
         }
 
