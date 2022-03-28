@@ -6,15 +6,10 @@ pipeline {
 
     stages {
 
-        stage("Test") {
-            steps {
-                sh "mvn clean install"
-            }
-        }
-
         stage("Build") {
             steps {
                 echo 'Build'
+                echo 'ork $WORKSPACE'
             }
         }
 
