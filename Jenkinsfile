@@ -15,6 +15,8 @@ pipeline {
 
         stage("Deploy") {
             steps {
+                sh "pwd"
+                sh "ls -l"
                 echo 'Deploy'
             }
         }
@@ -23,7 +25,6 @@ pipeline {
     
     post {
         always {
-            cleanWs()
         }
     }
 
